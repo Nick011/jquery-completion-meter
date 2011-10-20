@@ -1,0 +1,5 @@
+This is a jquery plugin that produces a completion meter to show what percentage of a form has been complete by the user. You basically just have to link the script, put a
+
+<div> tag in your html and then call the 'percentComplete' function on that div tag whenever you want to calculate and display what percentage of the form has been completed. In the above example, the calculation is being made when the page first loads and then every time the user moves off of a field.
+
+The function takes 3 arguments. The first argument is a jquery selector to determine which form fields to calculate. In the example above it's calculating the % for all input fields, but you might want to change this to only calculate for required fields in which case you can pass something like ".required". The second argument is the hex color that you want the meter and it's bor
