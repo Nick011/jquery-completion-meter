@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>jQuery Percent Completion Meter</title>
+
+<style type="text/css">
+#container {position:relative; width:990px; margin:0 auto;}
+</style>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript">
+
+(function($){
+    $.fn.percentComplete = function(selector, color, size){
+        return this.each(function(){
+            var fieldCount = $(selector).not(":radio").length;
+            var names = [];
+            $(selector+":radio").each(function(){
+		var n = $(this).attr('name');
+                if(names.indexOf(n) < 0){
+                    names.push(n);
+                }
+            });
+            fieldCount = fieldCount + names.length;
+            if(fieldCount){
+                var completeCount = $(selector+"[value!='']").not(":checkbox").not(":radio").length + $(selector+":checked").length;
+                var percentComplete = Math.round((completeCount / fieldCount) * 100);
+                $(this).empty().append(percentComplete + "% Complete<br><div><div>&nbsp;</div></div>").children("div").css({"width": size, "border": "1px solid"+color}).children("div").css({"width": percentComplete+"%", "background-color":color});
+            }
+        });
+    };
+})(jQuery);
+
+
+$("document").ready(function(){
+    $("#completion_meter").percentComplete(".required", "#000000", "200px");
+    $(":input").blur(function(){
+        $("#completion_meter").percentComplete(".required", "#000000", "200px");
+    });
+});
+</script>
+</head>
+<body>
+
+<div id="container">
+    
+    <br><br>
+    <div id="completion_meter"></div>
+    <br><br>
+    
+    <form>
+        <div>First Name: <input class="required" id="first_name" name="first_name" type="text" value=""/></div>
+        <div>Last Name: <input class="required" id="last_name" name="first_name" type="text" value=""/></div>
+        <div>Email: <input class="required" id="email" name="email" type="text" value="" /></div>
+        <div>Birthday: <input class="required" id="Birthday" name="birthday" type="text" value="" /></div>
+        <div>Address: <input class="required" id="address" name="address" type="text" value="" /></div>
+        <div>Do you like Tech Crunch: <select class="required" id="tech_crunch"><option value="select">select</option><option value="yes">yes</option><option value="no">no</option></select></div>
+        <div>Description:<br><textarea rows="6" cols="40" class="required" name="description" id="description"></textarea></div>
+        <input type="submit" name="submit" id="submit" value="submit" />
+    </form>
+
+</div>
+
+
+</body>
+</html>
+
